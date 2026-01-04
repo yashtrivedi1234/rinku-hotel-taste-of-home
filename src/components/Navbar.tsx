@@ -1,12 +1,13 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const navLinks = [
   { name: "Home", path: "/" },
   { name: "About", path: "/about" },
   { name: "Menu", path: "/menu" },
+  { name: "Offers", path: "/offers", highlight: true },
   { name: "Gallery", path: "/gallery" },
   { name: "Contact", path: "/contact" },
 ];
@@ -55,14 +56,21 @@ const Navbar = () => {
             <Link
               key={link.path}
               to={link.path}
-              className={`relative font-medium transition-colors duration-300 link-underline ${
+              className={`relative font-medium transition-colors duration-300 flex items-center gap-1 ${
+                link.highlight ? "" : "link-underline"
+              } ${
                 location.pathname === link.path
                   ? "text-primary"
+                  : link.highlight
+                  ? isScrolled
+                    ? "text-secondary hover:text-secondary/80"
+                    : "text-secondary hover:text-secondary/80"
                   : isScrolled
                   ? "text-foreground hover:text-primary"
                   : "text-primary-foreground/90 hover:text-primary-foreground"
               }`}
             >
+              {link.highlight && <Sparkles className="w-4 h-4" />}
               {link.name}
             </Link>
           ))}

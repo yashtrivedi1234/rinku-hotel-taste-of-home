@@ -1,15 +1,21 @@
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Clock, Award, Heart, Sparkles } from "lucide-react";
+import { ArrowRight, Clock, Award, Heart, Sparkles, Percent, Flame } from "lucide-react";
 import FoodCard from "@/components/FoodCard";
 import TestimonialCard from "@/components/TestimonialCard";
+import CountdownTimer from "@/components/CountdownTimer";
 
 import heroImage from "@/assets/hero-food.jpg";
 import butterChicken from "@/assets/dish-butter-chicken.jpg";
 import samosa from "@/assets/dish-samosa.jpg";
 import biryani from "@/assets/dish-biryani.jpg";
 import paneer from "@/assets/dish-paneer.jpg";
+
+// End of day for countdown
+const today = new Date();
+const endOfDay = new Date(today);
+endOfDay.setHours(23, 59, 59, 999);
 
 const featuredDishes = [
   {
@@ -196,6 +202,80 @@ const Index = () => {
                 </p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Special Offers Teaser */}
+      <section className="py-16 bg-secondary/10 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/20 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-primary/10 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl" />
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-4">
+                <Flame className="w-4 h-4 text-primary" />
+                <span className="text-primary font-medium text-sm">Hot Deals Today</span>
+              </div>
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Special <span className="text-primary">Offers</span> & Deals
+              </h2>
+              <p className="text-muted-foreground mb-6">
+                Don't miss our daily specials, combo meals, and seasonal promotions. 
+                Save big while enjoying authentic Indian cuisine!
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link to="/offers">
+                  <Button variant="hero" size="lg">
+                    <Percent className="w-4 h-4" />
+                    View All Offers
+                    <ArrowRight className="w-4 h-4" />
+                  </Button>
+                </Link>
+              </div>
+            </div>
+
+            <div className="bg-card rounded-2xl p-6 shadow-warm-lg">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 bg-secondary rounded-full flex items-center justify-center">
+                  <Sparkles className="w-5 h-5 text-secondary-foreground" />
+                </div>
+                <div>
+                  <p className="font-semibold text-foreground">Today's Special</p>
+                  <p className="text-sm text-muted-foreground">Limited time only!</p>
+                </div>
+              </div>
+              
+              <div className="flex gap-4 mb-4">
+                <img 
+                  src={biryani} 
+                  alt="Biryani Deal" 
+                  className="w-24 h-24 rounded-xl object-cover"
+                />
+                <div className="flex-1">
+                  <h3 className="font-display text-lg font-semibold text-foreground">
+                    Biryani Feast Combo
+                  </h3>
+                  <p className="text-sm text-muted-foreground mb-2">
+                    Biryani + Raita + Salan + Dessert
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <span className="text-muted-foreground line-through text-sm">₹450</span>
+                    <span className="text-primary font-bold text-xl">₹299</span>
+                    <span className="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full font-medium">
+                      33% OFF
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-border">
+                <p className="text-sm text-muted-foreground mb-2 text-center">Offer ends in:</p>
+                <CountdownTimer targetDate={endOfDay} />
+              </div>
+            </div>
           </div>
         </div>
       </section>
