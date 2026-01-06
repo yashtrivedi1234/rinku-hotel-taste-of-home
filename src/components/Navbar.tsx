@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Menu, X, CalendarDays, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import CartDrawer from "@/components/CartDrawer";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -76,8 +77,9 @@ const Navbar = () => {
           ))}
         </div>
 
-        {/* CTA Button */}
-        <div className="hidden md:flex items-center gap-4">
+        {/* CTA Buttons */}
+        <div className="hidden md:flex items-center gap-3">
+          <CartDrawer />
           <Link to="/reservations">
             <Button variant={isScrolled ? "default" : "hero"} size="default">
               <CalendarDays className="w-4 h-4" />
@@ -87,17 +89,20 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Menu Button */}
-        <button
-          className="md:hidden p-2"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          {isMobileMenuOpen ? (
-            <X className={`w-6 h-6 ${isScrolled ? "text-foreground" : "text-primary-foreground"}`} />
-          ) : (
-            <Menu className={`w-6 h-6 ${isScrolled ? "text-foreground" : "text-primary-foreground"}`} />
-          )}
-        </button>
+        <div className="md:hidden flex items-center gap-2">
+          <CartDrawer />
+          <button
+            className="p-2"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? (
+              <X className={`w-6 h-6 ${isScrolled ? "text-foreground" : "text-primary-foreground"}`} />
+            ) : (
+              <Menu className={`w-6 h-6 ${isScrolled ? "text-foreground" : "text-primary-foreground"}`} />
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
