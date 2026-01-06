@@ -25,6 +25,7 @@ const menuCategories = [
 const menuItems = [
   // Starters
   {
+    id: "samosa",
     category: "starters",
     name: "Crispy Samosa",
     description: "Golden fried pastries stuffed with spiced potatoes and peas, served with mint chutney",
@@ -33,6 +34,7 @@ const menuItems = [
     isVeg: true,
   },
   {
+    id: "paneer-tikka",
     category: "starters",
     name: "Paneer Tikka",
     description: "Marinated cottage cheese cubes grilled to perfection with spices and vegetables",
@@ -41,6 +43,7 @@ const menuItems = [
     isVeg: true,
   },
   {
+    id: "tandoori-chicken",
     category: "starters",
     name: "Tandoori Chicken",
     description: "Classic charcoal-grilled chicken marinated in yogurt and aromatic spices",
@@ -50,6 +53,7 @@ const menuItems = [
   },
   // Main Course
   {
+    id: "butter-chicken",
     category: "main",
     name: "Butter Chicken",
     description: "Tender chicken in rich, creamy tomato gravy with aromatic spices and butter",
@@ -58,6 +62,7 @@ const menuItems = [
     isVeg: false,
   },
   {
+    id: "paneer-tikka-masala",
     category: "main",
     name: "Paneer Tikka Masala",
     description: "Grilled cottage cheese cubes in spiced tomato-based curry with cream",
@@ -66,6 +71,7 @@ const menuItems = [
     isVeg: true,
   },
   {
+    id: "dal-makhani",
     category: "main",
     name: "Dal Makhani",
     description: "Creamy black lentils slow-cooked overnight with butter and aromatic spices",
@@ -74,6 +80,7 @@ const menuItems = [
     isVeg: true,
   },
   {
+    id: "chicken-curry",
     category: "main",
     name: "Chicken Curry",
     description: "Traditional home-style chicken curry with onion-tomato gravy",
@@ -83,6 +90,7 @@ const menuItems = [
   },
   // Breads
   {
+    id: "butter-naan",
     category: "breads",
     name: "Butter Naan",
     description: "Soft leavened bread baked in tandoor and brushed with butter",
@@ -91,6 +99,7 @@ const menuItems = [
     isVeg: true,
   },
   {
+    id: "garlic-naan",
     category: "breads",
     name: "Garlic Naan",
     description: "Fluffy naan topped with minced garlic and fresh coriander",
@@ -99,6 +108,7 @@ const menuItems = [
     isVeg: true,
   },
   {
+    id: "tandoori-roti",
     category: "breads",
     name: "Tandoori Roti",
     description: "Whole wheat bread baked crisp in traditional clay oven",
@@ -108,6 +118,7 @@ const menuItems = [
   },
   // Rice & Biryani
   {
+    id: "hyderabadi-biryani",
     category: "rice",
     name: "Hyderabadi Biryani",
     description: "Fragrant basmati rice layered with spiced meat, saffron, and fried onions",
@@ -116,6 +127,7 @@ const menuItems = [
     isVeg: false,
   },
   {
+    id: "veg-biryani",
     category: "rice",
     name: "Veg Biryani",
     description: "Aromatic rice with mixed vegetables, paneer, and traditional biryani spices",
@@ -124,6 +136,7 @@ const menuItems = [
     isVeg: true,
   },
   {
+    id: "jeera-rice",
     category: "rice",
     name: "Jeera Rice",
     description: "Basmati rice tempered with cumin seeds and ghee",
@@ -133,6 +146,7 @@ const menuItems = [
   },
   // Beverages
   {
+    id: "mango-lassi",
     category: "beverages",
     name: "Mango Lassi",
     description: "Creamy yogurt smoothie blended with fresh mango pulp and cardamom",
@@ -141,6 +155,7 @@ const menuItems = [
     isVeg: true,
   },
   {
+    id: "sweet-lassi",
     category: "beverages",
     name: "Sweet Lassi",
     description: "Traditional yogurt drink sweetened with sugar and rose water",
@@ -149,6 +164,7 @@ const menuItems = [
     isVeg: true,
   },
   {
+    id: "masala-chai",
     category: "beverages",
     name: "Masala Chai",
     description: "Spiced Indian tea brewed with ginger, cardamom, and fresh milk",
@@ -158,6 +174,7 @@ const menuItems = [
   },
   // Desserts
   {
+    id: "gulab-jamun",
     category: "desserts",
     name: "Gulab Jamun",
     description: "Soft milk dumplings soaked in rose-flavored sugar syrup",
@@ -166,6 +183,7 @@ const menuItems = [
     isVeg: true,
   },
   {
+    id: "rasmalai",
     category: "desserts",
     name: "Rasmalai",
     description: "Soft cottage cheese patties in sweetened, cardamom-flavored milk",
