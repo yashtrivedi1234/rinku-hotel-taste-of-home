@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Menu, X, Phone, Sparkles } from "lucide-react";
+import { Menu, X, CalendarDays, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const navLinks = [
@@ -78,12 +78,12 @@ const Navbar = () => {
 
         {/* CTA Button */}
         <div className="hidden md:flex items-center gap-4">
-          <a href="tel:+919876543210">
+          <Link to="/reservations">
             <Button variant={isScrolled ? "default" : "hero"} size="default">
-              <Phone className="w-4 h-4" />
-              Call Now
+              <CalendarDays className="w-4 h-4" />
+              Book Table
             </Button>
-          </a>
+          </Link>
         </div>
 
         {/* Mobile Menu Button */}
@@ -120,12 +120,12 @@ const Navbar = () => {
               {link.name}
             </Link>
           ))}
-          <a href="tel:+919876543210" className="mt-2">
+          <Link to="/reservations" className="mt-2">
             <Button variant="default" className="w-full">
-              <Phone className="w-4 h-4" />
-              Call Now
+              <CalendarDays className="w-4 h-4" />
+              Book Table
             </Button>
-          </a>
+          </Link>
         </div>
       </div>
     </nav>
