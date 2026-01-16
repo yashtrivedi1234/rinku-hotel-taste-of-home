@@ -4,6 +4,9 @@ import { Sparkles, Flame, Gift, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import OfferCard from "@/components/OfferCard";
 import CountdownTimer from "@/components/CountdownTimer";
+import PageTransition from "@/components/PageTransition";
+import ScrollReveal from "@/components/ScrollReveal";
+import StaggerContainer from "@/components/StaggerContainer";
 
 import butterChicken from "@/assets/dish-butter-chicken.jpg";
 import biryani from "@/assets/dish-biryani.jpg";
@@ -121,7 +124,7 @@ const seasonalOffers = [
 
 const Offers = () => {
   return (
-    <>
+    <PageTransition>
       <Helmet>
         <title>Special Offers - Rinku Hotel | Daily Deals & Combos</title>
         <meta name="description" content="Discover amazing deals at Rinku Hotel! Daily specials, combo meals, and seasonal promotions. Save big on authentic Indian cuisine." />
@@ -133,7 +136,7 @@ const Offers = () => {
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+CjxwYXRoIGQ9Ik0wIDBoNjB2NjBIMHoiIGZpbGw9Im5vbmUiLz4KPHBhdGggZD0iTTMwIDVhMjUgMjUgMCAxIDAgMCA1MCAyNSAyNSAwIDAgMCAwLTUwem0wIDQ1YTIwIDIwIDAgMSAxIDAtNDAgMjAgMjAgMCAwIDEgMCA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjEiLz4KPC9zdmc+')] bg-repeat" />
         </div>
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-3xl mx-auto text-center">
+          <ScrollReveal className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-foreground/10 backdrop-blur-sm rounded-full mb-6">
               <Sparkles className="w-5 h-5 text-secondary" />
               <span className="text-primary-foreground font-medium">Limited Time Offers</span>
@@ -153,14 +156,14 @@ const Offers = () => {
               </p>
               <CountdownTimer targetDate={endOfDay} />
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* Daily Deals */}
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
-          <div className="flex items-center gap-3 mb-8">
+          <ScrollReveal className="flex items-center gap-3 mb-8">
             <div className="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center">
               <Flame className="w-6 h-6 text-secondary" />
             </div>
@@ -170,26 +173,20 @@ const Offers = () => {
                 Daily Specials
               </h2>
             </div>
-          </div>
+          </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {dailyDeals.map((deal, index) => (
-              <div
-                key={deal.title}
-                className="animate-fade-up"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <OfferCard {...deal} />
-              </div>
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {dailyDeals.map((deal) => (
+              <OfferCard key={deal.title} {...deal} />
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
       {/* Combo Meals */}
       <section className="py-16 bg-muted">
         <div className="container mx-auto px-4">
-          <div className="flex items-center gap-3 mb-8">
+          <ScrollReveal className="flex items-center gap-3 mb-8">
             <div className="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center">
               <Gift className="w-6 h-6 text-accent" />
             </div>
@@ -199,26 +196,20 @@ const Offers = () => {
                 Combo Meals
               </h2>
             </div>
-          </div>
+          </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {comboMeals.map((combo, index) => (
-              <div
-                key={combo.title}
-                className="animate-fade-up"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <OfferCard {...combo} />
-              </div>
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {comboMeals.map((combo) => (
+              <OfferCard key={combo.title} {...combo} />
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
       {/* Seasonal Promotions */}
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
-          <div className="flex items-center gap-3 mb-8">
+          <ScrollReveal className="flex items-center gap-3 mb-8">
             <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
               <Calendar className="w-6 h-6 text-primary" />
             </div>
@@ -228,55 +219,51 @@ const Offers = () => {
                 Seasonal Promotions
               </h2>
             </div>
-          </div>
+          </ScrollReveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {seasonalOffers.map((offer, index) => (
-              <div
-                key={offer.title}
-                className="animate-fade-up"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <OfferCard {...offer} />
-              </div>
+          <StaggerContainer className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {seasonalOffers.map((offer) => (
+              <OfferCard key={offer.title} {...offer} />
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
       {/* Terms & CTA */}
-      <section className="py-12 bg-muted">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <div className="bg-card rounded-2xl p-6 md:p-8 shadow-warm-sm">
-              <h3 className="font-display text-xl font-semibold text-foreground mb-4">
-                Terms & Conditions
-              </h3>
-              <ul className="text-muted-foreground text-sm space-y-2 mb-6">
-                <li>• Offers valid for dine-in and takeaway orders only</li>
-                <li>• Cannot be combined with other offers or discounts</li>
-                <li>• Subject to availability; limited quantities per day</li>
-                <li>• Management reserves the right to modify or withdraw offers</li>
-                <li>• Daily deals valid on specific days as mentioned</li>
-              </ul>
-              
-              <div className="flex flex-col sm:flex-row gap-4 pt-4 border-t border-border">
-                <Link to="/menu" className="flex-1">
-                  <Button variant="outline" size="lg" className="w-full">
-                    View Full Menu
-                  </Button>
-                </Link>
-                <a href="tel:+919876543210" className="flex-1">
-                  <Button variant="hero" size="lg" className="w-full">
-                    Order Now
-                  </Button>
-                </a>
+      <ScrollReveal>
+        <section className="py-12 bg-muted">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto">
+              <div className="bg-card rounded-2xl p-6 md:p-8 shadow-warm-sm">
+                <h3 className="font-display text-xl font-semibold text-foreground mb-4">
+                  Terms & Conditions
+                </h3>
+                <ul className="text-muted-foreground text-sm space-y-2 mb-6">
+                  <li>• Offers valid for dine-in and takeaway orders only</li>
+                  <li>• Cannot be combined with other offers or discounts</li>
+                  <li>• Subject to availability; limited quantities per day</li>
+                  <li>• Management reserves the right to modify or withdraw offers</li>
+                  <li>• Daily deals valid on specific days as mentioned</li>
+                </ul>
+                
+                <div className="flex flex-col sm:flex-row gap-4 pt-4 border-t border-border">
+                  <Link to="/menu" className="flex-1">
+                    <Button variant="outline" size="lg" className="w-full">
+                      View Full Menu
+                    </Button>
+                  </Link>
+                  <a href="tel:+919876543210" className="flex-1">
+                    <Button variant="hero" size="lg" className="w-full">
+                      Order Now
+                    </Button>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-    </>
+        </section>
+      </ScrollReveal>
+    </PageTransition>
   );
 };
 

@@ -1,6 +1,9 @@
 import { Helmet } from "react-helmet-async";
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import FoodCard from "@/components/FoodCard";
+import PageTransition from "@/components/PageTransition";
+import ScrollReveal from "@/components/ScrollReveal";
 
 import butterChicken from "@/assets/dish-butter-chicken.jpg";
 import samosa from "@/assets/dish-samosa.jpg";
@@ -201,7 +204,7 @@ const Menu = () => {
     : menuItems.filter(item => item.category === activeCategory);
 
   return (
-    <>
+    <PageTransition>
       <Helmet>
         <title>Our Menu - Rinku Hotel | Authentic Indian Cuisine</title>
         <meta name="description" content="Explore Rinku Hotel's delicious menu featuring authentic Indian dishes - from crispy samosas to creamy butter chicken, aromatic biryani, and more." />
@@ -210,7 +213,7 @@ const Menu = () => {
       {/* Hero Section */}
       <section className="relative pt-32 pb-16 bg-muted">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
+          <ScrollReveal className="max-w-3xl mx-auto text-center">
             <span className="text-primary font-medium">Explore Our</span>
             <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mt-2 mb-6">
               Delicious <span className="text-primary">Menu</span>
@@ -219,16 +222,21 @@ const Menu = () => {
               From appetizing starters to decadent desserts, discover the authentic flavors 
               of India prepared with love and tradition.
             </p>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* Category Filter */}
       <section className="sticky top-16 z-30 bg-background border-b border-border py-4 shadow-warm-sm">
         <div className="container mx-auto px-4">
-          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-            {menuCategories.map((category) => (
-              <button
+          <motion.div 
+            className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            {menuCategories.map((category, index) => (
+              <motion.button
                 key={category.id}
                 onClick={() => setActiveCategory(category.id)}
                 className={`px-5 py-2 rounded-full whitespace-nowrap font-medium transition-all duration-300 ${
@@ -236,11 +244,16 @@ const Menu = () => {
                     ? "bg-primary text-primary-foreground shadow-warm-md"
                     : "bg-muted text-muted-foreground hover:bg-muted/80"
                 }`}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 {category.name}
-              </button>
+              </motion.button>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -248,7 +261,12 @@ const Menu = () => {
       <section className="py-12 bg-background">
         <div className="container mx-auto px-4">
           {/* Legend */}
-          <div className="flex gap-6 mb-8 justify-center">
+          <motion.div 
+            className="flex gap-6 mb-8 justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
+          >
             <div className="flex items-center gap-2">
               <div className="veg-indicator" />
               <span className="text-sm text-muted-foreground">Vegetarian</span>
@@ -257,44 +275,58 @@ const Menu = () => {
               <div className="nonveg-indicator" />
               <span className="text-sm text-muted-foreground">Non-Vegetarian</span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredItems.map((item, index) => (
-              <div
-                key={`${item.name}-${index}`}
-                className="animate-fade-up"
-                style={{ animationDelay: `${index * 50}ms` }}
-              >
-                <FoodCard {...item} />
-              </div>
-            ))}
-          </div>
+          <motion.div 
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+            layout
+          >
+            <AnimatePresence mode="popLayout">
+              {filteredItems.map((item, index) => (
+                <motion.div
+                  key={item.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.3, delay: index * 0.03 }}
+                >
+                  <FoodCard {...item} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
 
           {filteredItems.length === 0 && (
-            <div className="text-center py-12">
+            <motion.div 
+              className="text-center py-12"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
               <p className="text-muted-foreground">No items found in this category.</p>
-            </div>
+            </motion.div>
           )}
         </div>
       </section>
 
       {/* Special Note */}
-      <section className="py-12 bg-muted">
-        <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto text-center">
-            <h3 className="font-display text-xl font-semibold text-foreground mb-4">
-              Special Dietary Requirements?
-            </h3>
-            <p className="text-muted-foreground">
-              We're happy to accommodate dietary restrictions and allergies. 
-              Please inform our staff when ordering, and we'll prepare your meal accordingly.
-            </p>
+      <ScrollReveal>
+        <section className="py-12 bg-muted">
+          <div className="container mx-auto px-4">
+            <div className="max-w-2xl mx-auto text-center">
+              <h3 className="font-display text-xl font-semibold text-foreground mb-4">
+                Special Dietary Requirements?
+              </h3>
+              <p className="text-muted-foreground">
+                We're happy to accommodate dietary restrictions and allergies. 
+                Please inform our staff when ordering, and we'll prepare your meal accordingly.
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
-    </>
+        </section>
+      </ScrollReveal>
+    </PageTransition>
   );
 };
 

@@ -1,6 +1,9 @@
 import { Helmet } from "react-helmet-async";
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
+import PageTransition from "@/components/PageTransition";
+import ScrollReveal from "@/components/ScrollReveal";
 
 import heroFood from "@/assets/hero-food.jpg";
 import interiorImage from "@/assets/restaurant-interior.jpg";
@@ -45,86 +48,74 @@ const Gallery = () => {
   };
 
   return (
-    <>
+    <PageTransition>
       <Helmet>
         <title>Gallery - Rinku Hotel | Food & Restaurant Photos</title>
-        <meta name="description" content="Browse our gallery of mouth-watering dishes and cozy restaurant ambiance at Rinku Hotel. See what awaits you!" />
+        <meta name="description" content="Browse our gallery of mouth-watering dishes and cozy restaurant ambiance at Rinku Hotel." />
       </Helmet>
 
-      {/* Hero Section */}
       <section className="relative pt-32 pb-16 bg-muted">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
+          <ScrollReveal className="max-w-3xl mx-auto text-center">
             <span className="text-primary font-medium">Visual Feast</span>
-            <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mt-2 mb-6">
-              Our <span className="text-primary">Gallery</span>
-            </h1>
-            <p className="text-muted-foreground text-lg">
-              A glimpse into our kitchen, our dishes, and the warm ambiance 
-              that awaits you at Rinku Hotel.
-            </p>
-          </div>
+            <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mt-2 mb-6">Our <span className="text-primary">Gallery</span></h1>
+            <p className="text-muted-foreground text-lg">A glimpse into our kitchen, our dishes, and the warm ambiance that awaits you.</p>
+          </ScrollReveal>
         </div>
       </section>
 
-      {/* Gallery Grid */}
       <section className="py-12 bg-background">
         <div className="container mx-auto px-4">
           <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
             {galleryImages.map((image, index) => (
-              <div
+              <motion.div
                 key={index}
                 className="break-inside-avoid group cursor-pointer relative overflow-hidden rounded-xl"
                 onClick={() => openLightbox(image.src, image.alt)}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.02 }}
               >
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  className="w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
+                <img src={image.src} alt={image.alt} className="w-full object-cover transition-transform duration-500 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/40 transition-all duration-300 flex items-center justify-center">
                   <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center px-4">
-                    <p className="text-primary-foreground font-display text-lg font-semibold">
-                      {image.alt}
-                    </p>
-                    <p className="text-primary-foreground/80 text-sm mt-1">
-                      Click to view
-                    </p>
+                    <p className="text-primary-foreground font-display text-lg font-semibold">{image.alt}</p>
+                    <p className="text-primary-foreground/80 text-sm mt-1">Click to view</p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Lightbox */}
-      {selectedImage && (
-        <div
-          className="fixed inset-0 z-50 bg-foreground/95 flex items-center justify-center p-4"
-          onClick={closeLightbox}
-        >
-          <button
-            className="absolute top-6 right-6 text-primary-foreground hover:text-primary transition-colors duration-200"
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            className="fixed inset-0 z-50 bg-foreground/95 flex items-center justify-center p-4"
             onClick={closeLightbox}
-            aria-label="Close lightbox"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
           >
-            <X className="w-8 h-8" />
-          </button>
-          <div className="max-w-5xl max-h-[90vh] animate-scale-in">
-            <img
-              src={selectedImage}
-              alt={selectedAlt}
-              className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
-            />
-            <p className="text-center text-primary-foreground mt-4 font-display text-lg">
-              {selectedAlt}
-            </p>
-          </div>
-        </div>
-      )}
-    </>
+            <button className="absolute top-6 right-6 text-primary-foreground hover:text-primary transition-colors" onClick={closeLightbox}>
+              <X className="w-8 h-8" />
+            </button>
+            <motion.div
+              className="max-w-5xl max-h-[90vh]"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+            >
+              <img src={selectedImage} alt={selectedAlt} className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl" onClick={(e) => e.stopPropagation()} />
+              <p className="text-center text-primary-foreground mt-4 font-display text-lg">{selectedAlt}</p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </PageTransition>
   );
 };
 

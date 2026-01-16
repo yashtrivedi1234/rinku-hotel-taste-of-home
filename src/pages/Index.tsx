@@ -1,10 +1,14 @@
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Clock, Award, Heart, Sparkles, Percent, Flame } from "lucide-react";
 import FoodCard from "@/components/FoodCard";
 import TestimonialCard from "@/components/TestimonialCard";
 import CountdownTimer from "@/components/CountdownTimer";
+import PageTransition from "@/components/PageTransition";
+import ScrollReveal from "@/components/ScrollReveal";
+import StaggerContainer from "@/components/StaggerContainer";
 
 import heroImage from "@/assets/hero-food.jpg";
 import butterChicken from "@/assets/dish-butter-chicken.jpg";
@@ -91,7 +95,7 @@ const whyChooseUs = [
 
 const Index = () => {
   return (
-    <>
+    <PageTransition>
       <Helmet>
         <title>Rinku Hotel - Authentic Indian Restaurant | Taste That Feels Like Home</title>
         <meta name="description" content="Experience authentic Indian cuisine at Rinku Hotel. Fresh ingredients, traditional recipes, and warm hospitality. Visit us for the best butter chicken, biryani, and more!" />
@@ -100,27 +104,55 @@ const Index = () => {
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Background Image */}
-        <div
+        <motion.div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${heroImage})` }}
+          initial={{ scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-foreground/70 via-foreground/50 to-foreground/80" />
 
         {/* Content */}
         <div className="relative z-10 container mx-auto px-4 text-center py-32">
-          <div className="max-w-3xl mx-auto animate-fade-up">
-            <span className="inline-block px-4 py-2 bg-primary/20 backdrop-blur-sm rounded-full text-primary-foreground text-sm font-medium mb-6">
+          <motion.div 
+            className="max-w-3xl mx-auto"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <motion.span 
+              className="inline-block px-4 py-2 bg-primary/20 backdrop-blur-sm rounded-full text-primary-foreground text-sm font-medium mb-6"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
               Welcome to Our Kitchen
-            </span>
-            <h1 className="font-display text-4xl md:text-5xl lg:text-7xl font-bold text-primary-foreground mb-6 leading-tight">
+            </motion.span>
+            <motion.h1 
+              className="font-display text-4xl md:text-5xl lg:text-7xl font-bold text-primary-foreground mb-6 leading-tight"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+            >
               Taste That Feels{" "}
               <span className="text-secondary">Like Home</span>
-            </h1>
-            <p className="text-primary-foreground/80 text-lg md:text-xl mb-10 max-w-2xl mx-auto">
+            </motion.h1>
+            <motion.p 
+              className="text-primary-foreground/80 text-lg md:text-xl mb-10 max-w-2xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+            >
               Experience the rich flavors of authentic Indian cuisine, crafted with fresh ingredients 
               and served with love at Rinku Hotel.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            </motion.p>
+            <motion.div 
+              className="flex flex-col sm:flex-row gap-4 justify-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
+            >
               <Link to="/menu">
                 <Button variant="hero" size="xl">
                   View Our Menu
@@ -132,22 +164,31 @@ const Index = () => {
                   Visit Us
                 </Button>
               </Link>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-float">
+        <motion.div 
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 1, repeat: Infinity, repeatType: "reverse", repeatDelay: 1 }}
+        >
           <div className="w-6 h-10 border-2 border-primary-foreground/50 rounded-full flex items-start justify-center p-2">
-            <div className="w-1.5 h-1.5 bg-primary-foreground rounded-full animate-bounce" />
+            <motion.div 
+              className="w-1.5 h-1.5 bg-primary-foreground rounded-full"
+              animate={{ y: [0, 12, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            />
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* Featured Dishes */}
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
+          <ScrollReveal className="text-center mb-12">
             <span className="text-primary font-medium">Our Specials</span>
             <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2">
               Featured Dishes
@@ -155,41 +196,40 @@ const Index = () => {
             <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
               Discover our most loved dishes, prepared with authentic recipes and the finest ingredients.
             </p>
-          </div>
+          </ScrollReveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredDishes.map((dish) => (
               <FoodCard key={dish.name} {...dish} />
             ))}
-          </div>
+          </StaggerContainer>
 
-          <div className="text-center mt-10">
+          <ScrollReveal className="text-center mt-10" delay={0.3}>
             <Link to="/menu">
               <Button variant="outline" size="lg">
                 View Full Menu
                 <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* Why Choose Us */}
       <section className="py-20 bg-muted">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
+          <ScrollReveal className="text-center mb-12">
             <span className="text-primary font-medium">Why Rinku Hotel</span>
             <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2">
               What Makes Us Special
             </h2>
-          </div>
+          </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {whyChooseUs.map((item, index) => (
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" staggerDelay={0.15}>
+            {whyChooseUs.map((item) => (
               <div
                 key={item.title}
                 className="bg-card rounded-xl p-6 text-center shadow-warm-sm hover:shadow-warm-md transition-shadow duration-300"
-                style={{ animationDelay: `${index * 100}ms` }}
               >
                 <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                   <item.icon className="w-7 h-7 text-primary" />
@@ -202,7 +242,7 @@ const Index = () => {
                 </p>
               </div>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
@@ -213,7 +253,7 @@ const Index = () => {
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <div>
+            <ScrollReveal animation="fadeRight">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-4">
                 <Flame className="w-4 h-4 text-primary" />
                 <span className="text-primary font-medium text-sm">Hot Deals Today</span>
@@ -235,47 +275,49 @@ const Index = () => {
                   </Button>
                 </Link>
               </div>
-            </div>
+            </ScrollReveal>
 
-            <div className="bg-card rounded-2xl p-6 shadow-warm-lg">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-secondary rounded-full flex items-center justify-center">
-                  <Sparkles className="w-5 h-5 text-secondary-foreground" />
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground">Today's Special</p>
-                  <p className="text-sm text-muted-foreground">Limited time only!</p>
-                </div>
-              </div>
-              
-              <div className="flex gap-4 mb-4">
-                <img 
-                  src={biryani} 
-                  alt="Biryani Deal" 
-                  className="w-24 h-24 rounded-xl object-cover"
-                />
-                <div className="flex-1">
-                  <h3 className="font-display text-lg font-semibold text-foreground">
-                    Biryani Feast Combo
-                  </h3>
-                  <p className="text-sm text-muted-foreground mb-2">
-                    Biryani + Raita + Salan + Dessert
-                  </p>
-                  <div className="flex items-center gap-2">
-                    <span className="text-muted-foreground line-through text-sm">₹450</span>
-                    <span className="text-primary font-bold text-xl">₹299</span>
-                    <span className="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full font-medium">
-                      33% OFF
-                    </span>
+            <ScrollReveal animation="fadeLeft" delay={0.2}>
+              <div className="bg-card rounded-2xl p-6 shadow-warm-lg">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 bg-secondary rounded-full flex items-center justify-center">
+                    <Sparkles className="w-5 h-5 text-secondary-foreground" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground">Today's Special</p>
+                    <p className="text-sm text-muted-foreground">Limited time only!</p>
                   </div>
                 </div>
-              </div>
+                
+                <div className="flex gap-4 mb-4">
+                  <img 
+                    src={biryani} 
+                    alt="Biryani Deal" 
+                    className="w-24 h-24 rounded-xl object-cover"
+                  />
+                  <div className="flex-1">
+                    <h3 className="font-display text-lg font-semibold text-foreground">
+                      Biryani Feast Combo
+                    </h3>
+                    <p className="text-sm text-muted-foreground mb-2">
+                      Biryani + Raita + Salan + Dessert
+                    </p>
+                    <div className="flex items-center gap-2">
+                      <span className="text-muted-foreground line-through text-sm">₹450</span>
+                      <span className="text-primary font-bold text-xl">₹299</span>
+                      <span className="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full font-medium">
+                        33% OFF
+                      </span>
+                    </div>
+                  </div>
+                </div>
 
-              <div className="pt-4 border-t border-border">
-                <p className="text-sm text-muted-foreground mb-2 text-center">Offer ends in:</p>
-                <CountdownTimer targetDate={endOfDay} />
+                <div className="pt-4 border-t border-border">
+                  <p className="text-sm text-muted-foreground mb-2 text-center">Offer ends in:</p>
+                  <CountdownTimer targetDate={endOfDay} />
+                </div>
               </div>
-            </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -283,52 +325,54 @@ const Index = () => {
       {/* Testimonials */}
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
+          <ScrollReveal className="text-center mb-12">
             <span className="text-primary font-medium">Testimonials</span>
             <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2">
               What Our Guests Say
             </h2>
-          </div>
+          </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial) => (
               <TestimonialCard key={testimonial.name} {...testimonial} />
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
       {/* Opening Hours Banner */}
-      <section className="py-16 bg-primary relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+CjxwYXRoIGQ9Ik0wIDBoNjB2NjBIMHoiIGZpbGw9Im5vbmUiLz4KPHBhdGggZD0iTTMwIDVhMjUgMjUgMCAxIDAgMCA1MCAyNSAyNSAwIDAgMCAwLTUwem0wIDQ1YTIwIDIwIDAgMSAxIDAtNDAgMjAgMjAgMCAwIDEgMCA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjEiLz4KPC9zdmc+')] bg-repeat" />
-        </div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-            <div className="text-center md:text-left">
-              <h2 className="font-display text-2xl md:text-3xl font-bold text-primary-foreground mb-2">
-                Visit Us Today!
-              </h2>
-              <p className="text-primary-foreground/80">
-                Open Daily: 11:00 AM - 11:00 PM
-              </p>
-            </div>
-            <div className="flex gap-4">
-              <a href="tel:+919876543210">
-                <Button variant="secondary" size="lg">
-                  Call Now
-                </Button>
-              </a>
-              <Link to="/contact">
-                <Button variant="heroOutline" size="lg" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10">
-                  Get Directions
-                </Button>
-              </Link>
+      <ScrollReveal>
+        <section className="py-16 bg-primary relative overflow-hidden">
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+CjxwYXRoIGQ9Ik0wIDBoNjB2NjBIMHoiIGZpbGw9Im5vbmUiLz4KPHBhdGggZD0iTTMwIDVhMjUgMjUgMCAxIDAgMCA1MCAyNSAyNSAwIDAgMCAwLTUwem0wIDQ1YTIwIDIwIDAgMSAxIDAtNDAgMjAgMjAgMCAwIDEgMCA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjEiLz4KPC9zdmc+')] bg-repeat" />
+          </div>
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+              <div className="text-center md:text-left">
+                <h2 className="font-display text-2xl md:text-3xl font-bold text-primary-foreground mb-2">
+                  Visit Us Today!
+                </h2>
+                <p className="text-primary-foreground/80">
+                  Open Daily: 11:00 AM - 11:00 PM
+                </p>
+              </div>
+              <div className="flex gap-4">
+                <a href="tel:+919876543210">
+                  <Button variant="secondary" size="lg">
+                    Call Now
+                  </Button>
+                </a>
+                <Link to="/contact">
+                  <Button variant="heroOutline" size="lg" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10">
+                    Get Directions
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    </>
+        </section>
+      </ScrollReveal>
+    </PageTransition>
   );
 };
 

@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { motion } from "framer-motion";
 import { ArrowLeft, CheckCircle, CreditCard, Wallet, Banknote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,6 +20,8 @@ import {
 } from "@/components/ui/form";
 import { useCart } from "@/contexts/CartContext";
 import { toast } from "@/hooks/use-toast";
+import PageTransition from "@/components/PageTransition";
+import ScrollReveal from "@/components/ScrollReveal";
 
 const checkoutSchema = z.object({
   name: z
@@ -104,31 +107,66 @@ const Checkout = () => {
 
   if (isOrderPlaced) {
     return (
-      <>
+      <PageTransition>
         <Helmet>
           <title>Order Confirmed - Rinku Hotel</title>
         </Helmet>
 
         <section className="min-h-screen pt-32 pb-16 bg-muted">
           <div className="container mx-auto px-4">
-            <div className="max-w-lg mx-auto text-center">
-              <div className="w-24 h-24 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-6">
+            <motion.div 
+              className="max-w-lg mx-auto text-center"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <motion.div 
+                className="w-24 h-24 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-6"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+              >
                 <CheckCircle className="w-12 h-12 text-accent" />
-              </div>
-              <h1 className="font-display text-3xl font-bold text-foreground mb-4">
+              </motion.div>
+              <motion.h1 
+                className="font-display text-3xl font-bold text-foreground mb-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+              >
                 Order Confirmed!
-              </h1>
-              <p className="text-muted-foreground mb-2">
+              </motion.h1>
+              <motion.p 
+                className="text-muted-foreground mb-2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+              >
                 Thank you for your order. Your order number is:
-              </p>
-              <p className="text-2xl font-bold text-primary mb-6">
+              </motion.p>
+              <motion.p 
+                className="text-2xl font-bold text-primary mb-6"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.5 }}
+              >
                 #{orderNumber}
-              </p>
-              <p className="text-muted-foreground mb-8">
+              </motion.p>
+              <motion.p 
+                className="text-muted-foreground mb-8"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6 }}
+              >
                 We've sent a confirmation email with your order details. 
                 Your delicious food will be on its way soon!
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              </motion.p>
+              <motion.div 
+                className="flex flex-col sm:flex-row gap-4 justify-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7 }}
+              >
                 <Link to="/menu">
                   <Button variant="hero" size="lg">
                     Order More
@@ -139,24 +177,24 @@ const Checkout = () => {
                     Back to Home
                   </Button>
                 </Link>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
         </section>
-      </>
+      </PageTransition>
     );
   }
 
   if (items.length === 0) {
     return (
-      <>
+      <PageTransition>
         <Helmet>
           <title>Checkout - Rinku Hotel</title>
         </Helmet>
 
         <section className="min-h-screen pt-32 pb-16 bg-muted">
           <div className="container mx-auto px-4">
-            <div className="max-w-lg mx-auto text-center">
+            <ScrollReveal className="max-w-lg mx-auto text-center">
               <h1 className="font-display text-3xl font-bold text-foreground mb-4">
                 Your Cart is Empty
               </h1>
@@ -168,15 +206,15 @@ const Checkout = () => {
                   Browse Menu
                 </Button>
               </Link>
-            </div>
+            </ScrollReveal>
           </div>
         </section>
-      </>
+      </PageTransition>
     );
   }
 
   return (
-    <>
+    <PageTransition>
       <Helmet>
         <title>Checkout - Rinku Hotel | Complete Your Order</title>
         <meta
@@ -188,16 +226,18 @@ const Checkout = () => {
       {/* Hero Section */}
       <section className="relative pt-32 pb-8 bg-muted">
         <div className="container mx-auto px-4">
-          <Link
-            to="/menu"
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-4"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Menu
-          </Link>
-          <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground">
-            Checkout
-          </h1>
+          <ScrollReveal>
+            <Link
+              to="/menu"
+              className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-4"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back to Menu
+            </Link>
+            <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground">
+              Checkout
+            </h1>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -206,7 +246,7 @@ const Checkout = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Form Section */}
-            <div className="lg:col-span-2">
+            <ScrollReveal className="lg:col-span-2" animation="fadeRight">
               <div className="bg-card rounded-2xl p-6 md:p-8 shadow-warm border border-border">
                 <h2 className="font-display text-xl font-bold text-foreground mb-6">
                   Delivery Details
@@ -300,41 +340,47 @@ const Checkout = () => {
                               defaultValue={field.value}
                               className="grid grid-cols-1 sm:grid-cols-3 gap-4"
                             >
-                              <label
+                              <motion.label
                                 className={`flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
                                   field.value === "cod"
                                     ? "border-primary bg-primary/5"
                                     : "border-border hover:border-primary/50"
                                 }`}
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
                               >
                                 <RadioGroupItem value="cod" />
                                 <Banknote className="w-5 h-5 text-accent" />
                                 <span className="font-medium">Cash on Delivery</span>
-                              </label>
+                              </motion.label>
 
-                              <label
+                              <motion.label
                                 className={`flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
                                   field.value === "upi"
                                     ? "border-primary bg-primary/5"
                                     : "border-border hover:border-primary/50"
                                 }`}
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
                               >
                                 <RadioGroupItem value="upi" />
                                 <Wallet className="w-5 h-5 text-primary" />
                                 <span className="font-medium">UPI</span>
-                              </label>
+                              </motion.label>
 
-                              <label
+                              <motion.label
                                 className={`flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
                                   field.value === "card"
                                     ? "border-primary bg-primary/5"
                                     : "border-border hover:border-primary/50"
                                 }`}
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
                               >
                                 <RadioGroupItem value="card" />
                                 <CreditCard className="w-5 h-5 text-secondary" />
                                 <span className="font-medium">Card</span>
-                              </label>
+                              </motion.label>
                             </RadioGroup>
                           </FormControl>
                           <FormMessage />
@@ -360,30 +406,41 @@ const Checkout = () => {
                       )}
                     />
 
-                    <Button
-                      type="submit"
-                      variant="hero"
-                      size="xl"
-                      className="w-full"
-                      disabled={isSubmitting}
+                    <motion.div
+                      whileHover={{ scale: 1.01 }}
+                      whileTap={{ scale: 0.99 }}
                     >
-                      {isSubmitting ? "Placing Order..." : `Place Order • ₹${totalPrice}`}
-                    </Button>
+                      <Button
+                        type="submit"
+                        variant="hero"
+                        size="xl"
+                        className="w-full"
+                        disabled={isSubmitting}
+                      >
+                        {isSubmitting ? "Placing Order..." : `Place Order • ₹${totalPrice}`}
+                      </Button>
+                    </motion.div>
                   </form>
                 </Form>
               </div>
-            </div>
+            </ScrollReveal>
 
             {/* Order Summary */}
-            <div>
+            <ScrollReveal animation="fadeLeft" delay={0.2}>
               <div className="bg-card rounded-2xl p-6 shadow-warm border border-border sticky top-24">
                 <h2 className="font-display text-xl font-bold text-foreground mb-6">
                   Order Summary
                 </h2>
 
                 <div className="space-y-4 mb-6">
-                  {items.map((item) => (
-                    <div key={item.id} className="flex gap-3">
+                  {items.map((item, index) => (
+                    <motion.div 
+                      key={item.id} 
+                      className="flex gap-3"
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
                       <img
                         src={item.image}
                         alt={item.name}
@@ -408,7 +465,7 @@ const Checkout = () => {
                       <span className="font-medium text-sm">
                         ₹{item.price * item.quantity}
                       </span>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
 
@@ -435,11 +492,11 @@ const Checkout = () => {
                   Estimated delivery: 30-45 minutes
                 </p>
               </div>
-            </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
-    </>
+    </PageTransition>
   );
 };
 
