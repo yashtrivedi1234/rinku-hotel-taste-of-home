@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Menu, X, CalendarDays, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CartDrawer from "@/components/CartDrawer";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -79,6 +80,7 @@ const Navbar = () => {
 
         {/* CTA Buttons */}
         <div className="hidden md:flex items-center gap-3">
+          <ThemeToggle isScrolled={isScrolled} />
           <CartDrawer />
           <Link to="/reservations">
             <Button variant={isScrolled ? "default" : "hero"} size="default">
@@ -90,6 +92,7 @@ const Navbar = () => {
 
         {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center gap-2">
+          <ThemeToggle isScrolled={isScrolled} />
           <CartDrawer />
           <button
             className="p-2"
