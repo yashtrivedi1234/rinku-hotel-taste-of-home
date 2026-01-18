@@ -4,11 +4,11 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Clock, Award, Heart, Sparkles, Percent, Flame } from "lucide-react";
 import FoodCard from "@/components/FoodCard";
-import TestimonialCard from "@/components/TestimonialCard";
 import CountdownTimer from "@/components/CountdownTimer";
 import PageTransition from "@/components/PageTransition";
 import ScrollReveal from "@/components/ScrollReveal";
 import StaggerContainer from "@/components/StaggerContainer";
+import { CustomerReviews } from "@/components/CustomerReviews";
 
 import heroImage from "@/assets/hero-food.jpg";
 import butterChicken from "@/assets/dish-butter-chicken.jpg";
@@ -49,24 +49,6 @@ const featuredDishes = [
     price: "₹60",
     image: samosa,
     isVeg: true,
-  },
-];
-
-const testimonials = [
-  {
-    name: "Priya Sharma",
-    review: "The butter chicken here is absolutely divine! It reminds me of my grandmother's cooking. Best Indian food in the city!",
-    rating: 5,
-  },
-  {
-    name: "Rahul Verma",
-    review: "Amazing ambiance and even better food. The biryani is perfectly spiced and the naan is fresh from the tandoor.",
-    rating: 5,
-  },
-  {
-    name: "Anjali Patel",
-    review: "Such warm hospitality! The staff made us feel like family. Will definitely come back for the paneer tikka.",
-    rating: 4,
   },
 ];
 
@@ -322,23 +304,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-20 bg-background">
-        <div className="container mx-auto px-4">
-          <ScrollReveal className="text-center mb-12">
-            <span className="text-primary font-medium">Testimonials</span>
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2">
-              What Our Guests Say
-            </h2>
-          </ScrollReveal>
-
-          <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial) => (
-              <TestimonialCard key={testimonial.name} {...testimonial} />
-            ))}
-          </StaggerContainer>
-        </div>
-      </section>
+      {/* Customer Reviews */}
+      <CustomerReviews />
 
       {/* Opening Hours Banner */}
       <ScrollReveal>
