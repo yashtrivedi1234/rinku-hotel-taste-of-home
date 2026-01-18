@@ -1,7 +1,43 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Phone, MapPin, Clock, Facebook, Instagram, Twitter } from "lucide-react";
+import { Phone, MapPin, Clock, Facebook, Instagram, Twitter, Send } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
+import { z } from "zod";
+
+const emailSchema = z.string().email("Please enter a valid email address");
 
 const Footer = () => {
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
+  const { toast } = useToast();
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+
+    const result = emailSchema.safeParse(email);
+    if (!result.success) {
+      setError(result.error.errors[0].message);
+      return;
+    }
+
+    setIsSubmitting(true);
+    
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    
+    toast({
+      title: "Subscribed! 🎉",
+      description: "Thank you for subscribing to our newsletter.",
+    });
+    
+    setEmail("");
+    setIsSubmitting(false);
+  };
+
   return (
     <footer className="bg-foreground text-primary-foreground">
       <div className="container mx-auto px-4 py-16">
@@ -41,6 +77,44 @@ const Footer = () => {
                 <Twitter className="w-5 h-5" />
               </a>
             </div>
+          </div>
+
+          {/* Newsletter Subscription */}
+          <div>
+            <h3 className="font-display text-lg font-semibold mb-6">Stay Updated</h3>
+            <p className="text-primary-foreground/70 mb-4">
+              Subscribe to our newsletter for exclusive offers, new menu items, and special events.
+            </p>
+            <form onSubmit={handleNewsletterSubmit} className="space-y-3">
+              <div>
+                <div className="flex gap-2">
+                  <Input
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setError("");
+                    }}
+                    className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/50 focus:border-primary"
+                  />
+                  <Button 
+                    type="submit" 
+                    size="icon"
+                    disabled={isSubmitting}
+                    className="bg-primary hover:bg-primary/90 flex-shrink-0"
+                  >
+                    <Send className="w-4 h-4" />
+                  </Button>
+                </div>
+                {error && (
+                  <p className="text-red-400 text-sm mt-2">{error}</p>
+                )}
+              </div>
+            </form>
+            <p className="text-primary-foreground/50 text-xs mt-3">
+              We respect your privacy. Unsubscribe anytime.
+            </p>
           </div>
 
           {/* Quick Links */}
@@ -106,12 +180,6 @@ const Footer = () => {
                 <span>12 PM - 10 PM</span>
               </li>
             </ul>
-            <div className="mt-6 p-4 bg-primary/20 rounded-lg">
-              <p className="text-sm text-primary-foreground/80">
-                <span className="text-primary font-semibold">Special:</span> Free delivery 
-                on orders above ₹500
-              </p>
-            </div>
           </div>
         </div>
 
