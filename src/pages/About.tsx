@@ -14,6 +14,7 @@ const values = [
   { icon: Users, title: "Warm Hospitality", description: "Every guest is treated like family. Our service is as warm as our food is flavorful." },
 ];
 
+
 const About = () => {
   return (
     <PageTransition>
