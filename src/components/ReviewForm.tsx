@@ -5,7 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { Send } from "lucide-react";
+import { useLoyalty } from "@/contexts/LoyaltyContext";
+import { Send, Gift } from "lucide-react";
 
 const reviewSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters").max(50, "Name is too long"),
@@ -24,6 +25,7 @@ export function ReviewForm({ onSubmit }: ReviewFormProps) {
   const [errors, setErrors] = useState<{ name?: string; comment?: string; rating?: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const { addPoints } = useLoyalty();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,9 +50,12 @@ export function ReviewForm({ onSubmit }: ReviewFormProps) {
     
     onSubmit({ name, comment, rating });
     
+    // Award loyalty points for review
+    addPoints(25, "review", "Review submitted");
+    
     toast({
       title: "Thank you for your review! ⭐",
-      description: "Your feedback helps us serve you better.",
+      description: "Your feedback helps us serve you better. You earned 25 loyalty points!",
     });
 
     setName("");
@@ -61,6 +66,11 @@ export function ReviewForm({ onSubmit }: ReviewFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="flex items-center gap-2 p-3 bg-accent/10 rounded-lg text-sm text-accent mb-4">
+        <Gift className="w-4 h-4" />
+        <span>Earn 25 loyalty points for submitting a review!</span>
+      </div>
+      
       <div>
         <label className="block text-sm font-medium text-foreground mb-2">
           Your Rating
