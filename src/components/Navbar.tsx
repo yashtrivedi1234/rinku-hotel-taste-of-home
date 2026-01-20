@@ -4,6 +4,7 @@ import { Menu, X, CalendarDays, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CartDrawer from "@/components/CartDrawer";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { LoyaltyBadge } from "@/components/LoyaltyBadge";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -80,6 +81,7 @@ const Navbar = () => {
 
         {/* CTA Buttons */}
         <div className="hidden md:flex items-center gap-3">
+          <LoyaltyBadge />
           <ThemeToggle isScrolled={isScrolled} />
           <CartDrawer />
           <Link to="/reservations">

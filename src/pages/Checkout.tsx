@@ -19,6 +19,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useCart } from "@/contexts/CartContext";
+import { useLoyalty } from "@/contexts/LoyaltyContext";
 import { toast } from "@/hooks/use-toast";
 import PageTransition from "@/components/PageTransition";
 import ScrollReveal from "@/components/ScrollReveal";
@@ -59,6 +60,7 @@ type CheckoutFormValues = z.infer<typeof checkoutSchema>;
 const Checkout = () => {
   const navigate = useNavigate();
   const { items, totalPrice, clearCart } = useCart();
+  const { addPoints } = useLoyalty();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isOrderPlaced, setIsOrderPlaced] = useState(false);
   const [orderNumber, setOrderNumber] = useState("");
@@ -93,11 +95,17 @@ const Checkout = () => {
     const generatedOrderNumber = `RH${Date.now().toString().slice(-8)}`;
     setOrderNumber(generatedOrderNumber);
 
+    // Award loyalty points (10 points per ₹100)
+    const earnedPoints = Math.floor(totalPrice / 100) * 10;
+    if (earnedPoints > 0) {
+      addPoints(earnedPoints, "order", `Order #${generatedOrderNumber}`);
+    }
+
     console.log("Order placed:", { ...data, items, totalPrice });
 
     toast({
-      title: "Order Placed Successfully!",
-      description: `Your order #${generatedOrderNumber} has been confirmed.`,
+      title: "Order Placed Successfully! 🎉",
+      description: `Your order #${generatedOrderNumber} has been confirmed.${earnedPoints > 0 ? ` You earned ${earnedPoints} loyalty points!` : ""}`,
     });
 
     clearCart();
