@@ -88,7 +88,6 @@ const About = () => {
               <p className="text-muted-foreground mb-6">Step into our kitchen, and you'll find a symphony of sizzling pans, aromatic spices, and passionate chefs working in perfect harmony.</p>
               <div className="grid grid-cols-3 gap-4">
                 <div className="text-center p-4 bg-muted rounded-lg"><p className="font-display text-2xl font-bold text-primary">100%</p><p className="text-sm text-muted-foreground">Hygienic</p></div>
-        
                 <div className="text-center p-4 bg-muted rounded-lg"><p className="font-display text-2xl font-bold text-primary">Fresh</p><p className="text-sm text-muted-foreground">Daily Prep</p></div>
                 <div className="text-center p-4 bg-muted rounded-lg"><p className="font-display text-2xl font-bold text-primary">50+</p><p className="text-sm text-muted-foreground">Dishes</p></div>
               </div>
