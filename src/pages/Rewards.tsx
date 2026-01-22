@@ -1,13 +1,13 @@
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
-import { Gift, Crown, Star, ShoppingBag, MessageSquare, ArrowRight, Check } from "lucide-react";
+import { Gift, Crown, Star, ShoppingBag, MessageSquare, ArrowRight, Check, Users } from "lucide-react";
 import { useLoyalty } from "@/contexts/LoyaltyContext";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
 import PageTransition from "@/components/PageTransition";
 import ScrollReveal from "@/components/ScrollReveal";
+import ReferralSection from "@/components/ReferralSection";
 
 const tierColors = {
   Bronze: "from-amber-600 to-amber-800",
@@ -156,6 +156,9 @@ const Rewards = () => {
         </div>
       </section>
 
+      {/* Referral Section */}
+      <ReferralSection />
+
       {/* How to Earn */}
       <section className="py-12 bg-background">
         <div className="container mx-auto px-4">
@@ -165,7 +168,7 @@ const Rewards = () => {
             </h2>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             <ScrollReveal delay={0.1}>
               <Card className="text-center p-6">
                 <ShoppingBag className="w-12 h-12 text-primary mx-auto mb-4" />
@@ -181,6 +184,15 @@ const Rewards = () => {
                 <h3 className="font-display text-xl font-bold text-foreground mb-2">Write Reviews</h3>
                 <p className="text-muted-foreground mb-3">Share your experience and earn</p>
                 <p className="text-2xl font-bold text-accent">25 pts / review</p>
+              </Card>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.3}>
+              <Card className="text-center p-6">
+                <Users className="w-12 h-12 text-secondary mx-auto mb-4" />
+                <h3 className="font-display text-xl font-bold text-foreground mb-2">Refer Friends</h3>
+                <p className="text-muted-foreground mb-3">Invite friends and earn when they order</p>
+                <p className="text-2xl font-bold text-secondary">100 pts / referral</p>
               </Card>
             </ScrollReveal>
           </div>
@@ -258,12 +270,15 @@ const Rewards = () => {
                         <div className="flex items-center gap-3">
                           <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
                             txn.type === "order" ? "bg-primary/10" :
-                            txn.type === "review" ? "bg-accent/10" : "bg-destructive/10"
+                            txn.type === "review" ? "bg-accent/10" :
+                            txn.type === "referral" ? "bg-secondary/10" : "bg-destructive/10"
                           }`}>
                             {txn.type === "order" ? (
                               <ShoppingBag className="w-5 h-5 text-primary" />
                             ) : txn.type === "review" ? (
                               <MessageSquare className="w-5 h-5 text-accent" />
+                            ) : txn.type === "referral" ? (
+                              <Users className="w-5 h-5 text-secondary" />
                             ) : (
                               <Gift className="w-5 h-5 text-destructive" />
                             )}
