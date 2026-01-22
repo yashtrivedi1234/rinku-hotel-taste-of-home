@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { motion } from "framer-motion";
-import { ArrowLeft, CheckCircle, CreditCard, Wallet, Banknote } from "lucide-react";
+import { ArrowLeft, CheckCircle, CreditCard, Wallet, Banknote, Users, Check, Tag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -60,10 +60,12 @@ type CheckoutFormValues = z.infer<typeof checkoutSchema>;
 const Checkout = () => {
   const navigate = useNavigate();
   const { items, totalPrice, clearCart } = useCart();
-  const { addPoints } = useLoyalty();
+  const { addPoints, applyReferralCode, appliedReferralCode, referralCode } = useLoyalty();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isOrderPlaced, setIsOrderPlaced] = useState(false);
   const [orderNumber, setOrderNumber] = useState("");
+  const [referralInput, setReferralInput] = useState("");
+  const [referralApplied, setReferralApplied] = useState(false);
 
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutSchema),
@@ -413,6 +415,78 @@ const Checkout = () => {
                         </FormItem>
                       )}
                     />
+
+                    {/* Referral Code Section */}
+                    {!appliedReferralCode && !referralApplied && (
+                      <div className="p-4 rounded-xl border-2 border-dashed border-border bg-muted/50">
+                        <div className="flex items-center gap-2 mb-3">
+                          <Tag className="w-5 h-5 text-primary" />
+                          <span className="font-medium text-foreground">Have a referral code?</span>
+                        </div>
+                        <div className="flex gap-2">
+                          <Input
+                            placeholder="Enter code (e.g. RINKUAB123)"
+                            value={referralInput}
+                            onChange={(e) => setReferralInput(e.target.value.toUpperCase())}
+                            className="font-mono tracking-wider"
+                          />
+                          <Button
+                            type="button"
+                            variant="outline"
+                            onClick={() => {
+                              if (!referralInput) {
+                                toast({
+                                  title: "Enter a code",
+                                  description: "Please enter a referral code first.",
+                                  variant: "destructive",
+                                });
+                                return;
+                              }
+                              if (referralInput === referralCode) {
+                                toast({
+                                  title: "Invalid code",
+                                  description: "You can't use your own referral code.",
+                                  variant: "destructive",
+                                });
+                                return;
+                              }
+                              const success = applyReferralCode(referralInput, form.getValues("email") || "guest");
+                              if (success) {
+                                setReferralApplied(true);
+                                toast({
+                                  title: "Referral Applied! 🎉",
+                                  description: "You've earned 50 bonus points!",
+                                });
+                              } else {
+                                toast({
+                                  title: "Couldn't apply code",
+                                  description: "You may have already used a referral code.",
+                                  variant: "destructive",
+                                });
+                              }
+                            }}
+                          >
+                            Apply
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+
+                    {(appliedReferralCode || referralApplied) && (
+                      <motion.div
+                        className="flex items-center gap-3 p-4 rounded-xl bg-accent/10 border border-accent/20"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                      >
+                        <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
+                          <Check className="w-4 h-4 text-accent" />
+                        </div>
+                        <div>
+                          <p className="font-medium text-foreground">Referral bonus applied!</p>
+                          <p className="text-sm text-muted-foreground">You received 50 bonus points</p>
+                        </div>
+                      </motion.div>
+                    )}
 
                     <motion.div
                       whileHover={{ scale: 1.01 }}
