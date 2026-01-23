@@ -10,6 +10,7 @@ import interiorImage from "@/assets/restaurant-interior.jpg";
 import butterChicken from "@/assets/dish-butter-chicken.jpg";
 import samosa from "@/assets/dish-samosa.jpg";
 import biryani from "@/assets/dish-biryani.jpg";
+
 import paneer from "@/assets/dish-paneer.jpg";
 import naan from "@/assets/dish-naan.jpg";
 import tandoori from "@/assets/dish-tandoori.jpg";
